@@ -1,0 +1,40 @@
+<!doctype html>
+<html lang="vi">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="description" content="Browse Aurora Flower Shop's seasonal bouquets and floral arrangements.">
+  <title>Shop Flowers | Aurora Flower Shop</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;600&family=Fraunces:opsz,wght@9..144,500;9..144,600&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="css/styles.css">
+</head>
+<body data-page="shop">
+  <header class="site-header">
+    <a class="brand" href="index.html" aria-label="Aurora Flowers"><span class="brand__mark" aria-hidden="true">A</span><strong>Aurora Flowers</strong></a>
+    <div class="header-actions">
+      <nav class="site-nav" aria-label="Điều hướng chính" data-nav><a href="index.html" data-i18n="nav.home">Trang chủ</a><a class="is-current" href="shop.html" data-i18n="nav.shop">Cửa hàng</a><a href="contact.html" data-i18n="nav.contact">Liên hệ</a></nav>
+      <button class="language-toggle" type="button" data-language-toggle aria-label="Switch to English">EN</button>
+      <button class="menu-button" type="button" aria-label="Mở trình đơn" data-i18n-aria-label="nav.open" aria-expanded="false" data-menu-button><span></span><span></span><span></span></button>
+    </div>
+  </header>
+  <main>
+    <section class="page-hero">
+      <p class="eyebrow" data-i18n="shop.eyebrow">Bộ sưu tập theo mùa</p>
+      <h1 data-i18n="shop.title">Chọn một bó hoa từ góc nhỏ Aurora</h1>
+      <p data-i18n="shop.copy">Mỗi thiết kế đều được cắm thủ công. Loại hoa có thể thay đổi theo mùa, nhưng màu sắc và tinh thần của bó hoa vẫn được giữ trọn.</p>
+    </section>
+    <section class="section container" aria-labelledby="catalog-title">
+      <div class="catalog-toolbar">
+        <h2 class="sr-only" id="catalog-title" data-i18n="shop.catalog">Tất cả sản phẩm</h2>
+        <div class="filters" data-category-filters aria-label="Lọc theo danh mục" data-i18n-aria-label="shop.filter"></div>
+      </div>
+      <div class="notice notice--info" data-products-status data-i18n="shop.loading">Aurora đang chuẩn bị những bó hoa mới nhất...</div>
+      <div class="product-grid" data-products-grid aria-live="polite"></div>
+    </section>
+  </main>
+  <footer class="site-footer"><div class="brand brand--footer"><span class="brand__mark" aria-hidden="true">A</span><strong>Aurora Flowers</strong></div><p data-i18n="footer.copy">&copy; 2026 Aurora Flowers. Được chăm chút tại TP. Hồ Chí Minh.</p><a href="admin-login.html" data-i18n="footer.login">Đăng nhập quản trị</a></footer>
+  <script type="module" src="js/catalog.js"></script>
+</body>
+</html>

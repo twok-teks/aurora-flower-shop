@@ -1,0 +1,44 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8"><meta name="viewport" content="width=device-width, initial-scale=1.0"><meta name="robots" content="noindex">
+  <title>Flower Studio | Aurora</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com"><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;600&family=Fraunces:opsz,wght@9..144,500;9..144,600&display=swap" rel="stylesheet"><link rel="stylesheet" href="css/styles.css">
+</head>
+<body class="admin-page">
+  <div class="admin-loading" data-page-loading>Checking your studio access...</div>
+  <div data-admin-content hidden>
+    <header class="admin-header">
+      <a class="brand" href="index.html"><span class="brand__mark" aria-hidden="true">A</span><strong>Aurora Flowers</strong></a>
+      <div class="admin-header__actions"><span data-admin-email></span><a class="text-link" href="shop.html" target="_blank">View shop</a><button class="button button--small button--outline" type="button" data-logout>Log out</button></div>
+    </header>
+    <main class="admin-main">
+      <section class="admin-title"><div><p class="eyebrow">Catalog care</p><h1>Your flower collection</h1><p>Add fresh designs, update availability, and keep your shop looking lovely.</p></div><button class="button button--primary" type="button" data-new-product>+ Add a product</button></section>
+      <div class="notice" data-admin-message hidden role="status"></div>
+      <section class="admin-grid">
+        <div class="admin-panel">
+          <div class="admin-panel__heading"><div><h2>Products</h2><p><span data-product-count>0</span> designs</p></div></div>
+          <div class="admin-products" data-admin-products><p class="empty-state">Loading products...</p></div>
+        </div>
+        <aside class="admin-panel admin-panel--form" data-form-panel>
+          <div class="admin-panel__heading"><div><p class="eyebrow" data-form-eyebrow>New design</p><h2 data-form-title>Add a product</h2></div><button class="icon-button" type="button" aria-label="Clear form" data-cancel-edit>&times;</button></div>
+          <form class="product-form" data-product-form>
+            <input type="hidden" name="id"><input type="hidden" name="existing_image_path"><input type="hidden" name="existing_image_url">
+            <label for="name">Tên sản phẩm (Vietnamese) *</label><input id="name" name="name" required minlength="2" maxlength="120">
+            <label for="name_en">Product name (English)</label><input id="name_en" name="name_en" minlength="2" maxlength="120">
+            <div class="form-row"><div><label for="price">Price (VND) *</label><input id="price" name="price" type="number" min="0" step="1000" required></div><div><label for="category">Category *</label><input id="category" name="category" list="categories" required maxlength="60"><datalist id="categories"><option value="Bouquets"><option value="Arrangements"><option value="Seasonal"><option value="Plants"></datalist></div></div>
+            <label for="description">Mô tả (Vietnamese)</label><textarea id="description" name="description" rows="4" maxlength="1000"></textarea>
+            <label for="description_en">Description (English)</label><textarea id="description_en" name="description_en" rows="4" maxlength="1000"></textarea>
+            <label for="image">Product image</label><input id="image" name="image" type="file" accept="image/jpeg,image/png,image/webp,image/gif"><small>JPG, PNG, WebP, or GIF. Maximum 5 MB.</small>
+            <div class="image-preview" data-image-preview hidden><img src="" alt="Current product preview"></div>
+            <div class="check-grid"><label class="check"><input name="in_stock" type="checkbox" checked><span>In stock</span></label><label class="check"><input name="featured" type="checkbox"><span>Featured</span></label><label class="check"><input name="is_active" type="checkbox" checked><span>Visible in shop</span></label></div>
+            <div class="form-actions"><button class="button button--primary button--full" type="submit" data-save-product>Save product</button><button class="button button--outline button--full" type="button" data-cancel-edit>Cancel</button></div>
+          </form>
+        </aside>
+      </section>
+    </main>
+  </div>
+  <script type="module" src="js/admin.js"></script>
+</body>
+</html>

@@ -1,0 +1,102 @@
+<!doctype html>
+<html lang="vi">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="description" content="Aurora Flower Shop creates soft, seasonal flowers for everyday beauty and meaningful moments.">
+  <title>Aurora Flower Shop | Thoughtful seasonal flowers</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;600&family=Fraunces:opsz,wght@9..144,500;9..144,600&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="css/styles.css">
+</head>
+<body data-page="home">
+  <header class="site-header">
+    <a class="brand" href="index.html" aria-label="Aurora Flowers">
+      <span class="brand__mark" aria-hidden="true">A</span>
+      <strong>Aurora Flowers</strong>
+    </a>
+    <div class="header-actions">
+      <nav class="site-nav" aria-label="Điều hướng chính" data-nav>
+        <a class="is-current" href="index.html" data-i18n="nav.home">Trang chủ</a>
+        <a href="shop.html" data-i18n="nav.shop">Cửa hàng</a>
+        <a href="contact.html" data-i18n="nav.contact">Liên hệ</a>
+      </nav>
+      <button class="language-toggle" type="button" data-language-toggle aria-label="Switch to English">EN</button>
+      <button class="menu-button" type="button" aria-label="Mở trình đơn" data-i18n-aria-label="nav.open" aria-expanded="false" data-menu-button><span></span><span></span><span></span></button>
+    </div>
+  </header>
+
+  <main>
+    <section class="hero">
+      <img class="hero__image" src="assets/aurora-hero.png" alt="Soft peach and cream flowers arranged in a ceramic vase">
+      <div class="hero__content">
+        <p class="eyebrow" data-i18n="home.hero.eyebrow">Một bó hoa tươi, gửi trao dịu dàng</p>
+        <h1><span data-i18n="home.hero.title">Trao một chút</span> <em data-i18n="home.hero.emphasis">dịu dàng.</em></h1>
+        <p data-i18n="home.hero.copy">Hoa được cắm thủ công và giao tận nơi khắp TP. Hồ Chí Minh.</p>
+        <div class="button-row">
+          <a class="button button--primary button--nowrap" href="shop.html" data-i18n="home.hero.shop">Khám phá hoa</a>
+          <a class="text-link text-link--nowrap" href="#about"><span data-i18n="home.hero.story">Về Aurora</span> <span aria-hidden="true">&rarr;</span></a>
+        </div>
+      </div>
+      <p class="hero__note" data-i18n="home.hero.note">Được chăm chút tại TP. Hồ Chí Minh</p>
+    </section>
+
+    <section class="intro section container" aria-labelledby="intro-title">
+      <p class="eyebrow" data-i18n="home.intro.eyebrow">Hoa theo mùa</p>
+      <h2 id="intro-title" data-i18n="home.intro.title">Mỗi bó hoa, một lời thương</h2>
+      <p data-i18n="home.intro.copy">Aurora chọn từng nhành hoa ở độ đẹp nhất, rồi nhẹ nhàng kết chúng thành một món quà thật riêng.</p>
+    </section>
+
+    <section class="section section--tinted" aria-labelledby="featured-title">
+      <div class="container">
+        <div class="section-heading">
+          <div><p class="eyebrow" data-i18n="home.featured.eyebrow">Từ bàn hoa Aurora</p><h2 id="featured-title" data-i18n="home.featured.title">Những bó hoa được yêu thích</h2></div>
+          <a class="text-link text-link--nowrap" href="shop.html"><span data-i18n="home.featured.link">Xem tất cả sản phẩm</span> <span aria-hidden="true">&rarr;</span></a>
+        </div>
+        <div class="notice notice--info" data-products-status data-i18n="home.featured.loading">Aurora đang chuẩn bị những bó hoa mới nhất...</div>
+        <div class="product-grid product-grid--three" data-products-grid aria-live="polite"></div>
+      </div>
+    </section>
+
+    <section class="story" id="about" aria-labelledby="story-title">
+      <img class="story__background" src="assets/aurora-boutique.png" alt="" aria-hidden="true">
+      <div class="story__inner container">
+        <div class="story__intro">
+          <p class="eyebrow" data-i18n="home.story.eyebrow">Chuyện của Aurora</p>
+          <h2 id="story-title" data-i18n="home.story.title">Hoa nở theo mùa. Yêu thương ở lại.</h2>
+          <p data-i18n="home.story.copy">Một chút tự nhiên, một chút tinh tế, và thật nhiều chăm chút trong từng bó hoa.</p>
+        </div>
+        <div class="story__values">
+          <article class="story__value"><span>01</span><div><h3 data-i18n="home.story.one.title">Đúng mùa</h3><p data-i18n="home.story.one.copy">Hoa được chọn khi đang tươi đẹp nhất.</p></div></article>
+          <article class="story__value"><span>02</span><div><h3 data-i18n="home.story.two.title">Thủ công</h3><p data-i18n="home.story.two.copy">Từng bó hoa được cắm riêng tại tiệm.</p></div></article>
+          <article class="story__value"><span>03</span><div><h3 data-i18n="home.story.three.title">Riêng cho bạn</h3><p data-i18n="home.story.three.copy">Mỗi thiết kế mang một cảm xúc riêng.</p></div></article>
+        </div>
+      </div>
+    </section>
+
+    <section class="contact section" id="contact" aria-labelledby="contact-title">
+      <div class="contact__inner container">
+        <p class="eyebrow" data-i18n="home.contact.eyebrow">Để hoa thay lời</p>
+        <h2 id="contact-title" data-i18n="home.contact.title">Gửi một lời thương</h2>
+        <p data-i18n="home.contact.copy">Chọn hoa, ngày giao và lời nhắn. Aurora sẽ mang yêu thương đến tận nơi trong TP. Hồ Chí Minh.</p>
+        <div class="contact__actions">
+          <a class="button button--light button--nowrap" href="contact.html" data-i18n="home.contact.button">Liên hệ với tiệm</a>
+          <div class="contact__socials" aria-label="Mạng xã hội">
+            <a href="https://instagram.com/auroraflowers" target="_blank" rel="noreferrer" aria-label="Instagram"><svg class="icon" aria-hidden="true"><use href="#icon-instagram"></use></svg></a>
+            <a href="https://facebook.com/auroraflowers" target="_blank" rel="noreferrer" aria-label="Facebook"><svg class="icon" aria-hidden="true"><use href="#icon-facebook"></use></svg></a>
+          </div>
+        </div>
+      </div>
+    </section>
+  </main>
+
+  <footer class="site-footer">
+    <div class="brand brand--footer"><span class="brand__mark" aria-hidden="true">A</span><strong>Aurora Flowers</strong></div>
+    <p data-i18n="footer.copy">&copy; 2026 Aurora Flowers. Được chăm chút tại TP. Hồ Chí Minh.</p>
+    <a href="admin-login.html" data-i18n="footer.login">Đăng nhập quản trị</a>
+  </footer>
+  <svg class="svg-symbols" aria-hidden="true"><symbol id="icon-instagram" viewBox="0 0 24 24"><rect x="3" y="3" width="18" height="18" rx="5"></rect><circle cx="12" cy="12" r="4"></circle><circle cx="17.5" cy="6.5" r="1" class="icon-fill"></circle></symbol><symbol id="icon-facebook" viewBox="0 0 24 24"><path d="M14 21v-8h3l.5-3H14V8.2c0-.9.3-1.7 1.8-1.7H18V3.8c-.6-.1-1.5-.2-2.6-.2-2.7 0-4.5 1.6-4.5 4.6V10H8v3h2.9v8"></path></symbol></svg>
+  <script type="module" src="js/catalog.js"></script>
+</body>
+</html>
