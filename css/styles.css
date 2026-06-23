@@ -67,7 +67,7 @@ html[lang="vi"] .hero__content h1 { max-width: 560px; font-size: clamp(2.7rem, 4
 html[lang="vi"] .hero__content > p:not(.eyebrow) { max-width: 480px; font-size: 1rem; }
 .hero__content h1 em { color: var(--blush-deep); font-weight: inherit; }
 .hero__content > p:not(.eyebrow) { max-width: 520px; color: #5c5e59; font-size: 1.12rem; }
-html[lang="vi"] .hero__copy { white-space: nowrap; }
+.hero__copy { white-space: nowrap; }
 .hero__note { position: absolute; z-index: 2; right: max(24px, calc((100vw - 1160px) / 2)); bottom: 30px; margin: 0; padding-left: 30px; color: #64645f; font: italic 1rem/1.4 var(--serif); }
 .hero__note::before { position: absolute; top: 50%; left: 0; width: 20px; border-top: 1px solid; content: ""; }
 .button-row { display: flex; align-items: center; gap: 26px; margin-top: 35px; }
