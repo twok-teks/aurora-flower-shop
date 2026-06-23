@@ -8,7 +8,9 @@ const translations = {
     "home.hero.eyebrow": "Một bó hoa tươi, gửi trao dịu dàng",
     "home.hero.title": "Trao một chút",
     "home.hero.emphasis": "dịu dàng.",
+    "home.hero.titleHtml": "<span class=\"hero__line\">Trao một chút</span><em class=\"hero__line\">dịu dàng.</em>",
     "home.hero.copy": "Hoa được cắm thủ công và giao tận nơi khắp TP. Hồ Chí Minh.",
+    "home.hero.copyHtml": "Hoa được cắm thủ công<br>và giao tận nơi khắp TP. Hồ Chí Minh.",
     "home.hero.shop": "Khám phá hoa",
     "home.hero.story": "Về Aurora",
     "home.hero.note": "Được chăm chút tại TP. Hồ Chí Minh",
@@ -78,7 +80,9 @@ const translations = {
     "home.hero.eyebrow": "Fresh, seasonal, thoughtfully made",
     "home.hero.title": "Flowers for life's",
     "home.hero.emphasis": "gentle moments.",
+    "home.hero.titleHtml": "Flowers for life's <em>gentle moments.</em>",
     "home.hero.copy": "Airy, garden-inspired flowers arranged by hand and delivered throughout Ho Chi Minh City.",
+    "home.hero.copyHtml": "Airy, garden-inspired flowers arranged by hand and delivered throughout Ho Chi Minh City.",
     "home.hero.shop": "Explore the flowers",
     "home.hero.story": "Meet Aurora",
     "home.hero.note": "Made with care in Ho Chi Minh City",
@@ -160,6 +164,9 @@ function applyLanguage() {
   document.documentElement.lang = language;
   document.querySelectorAll("[data-i18n]").forEach((element) => {
     element.textContent = t(element.dataset.i18n);
+  });
+  document.querySelectorAll("[data-i18n-html]").forEach((element) => {
+    element.innerHTML = t(element.dataset.i18nHtml);
   });
   document.querySelectorAll("[data-i18n-aria-label]").forEach((element) => {
     element.setAttribute("aria-label", t(element.dataset.i18nAriaLabel));

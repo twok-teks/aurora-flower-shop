@@ -60,11 +60,14 @@ h3 { font-size: 1.5rem; }
 .hero::after { position: absolute; inset: 0; background: linear-gradient(90deg, rgba(255, 250, 245, .74) 0%, rgba(255, 250, 245, .42) 36%, transparent 62%); content: ""; }
 .hero__content { position: relative; z-index: 2; width: min(630px, calc(100% - 40px)); padding: clamp(100px, 14vh, 160px) 0 80px max(20px, calc((100vw - 1160px) / 2)); }
 .hero__content h1 { max-width: 630px; margin-bottom: 24px; }
-html[lang="vi"] .hero__content .eyebrow { max-width: 100%; font-size: .64rem; line-height: 1.55; letter-spacing: .11em; }
+.hero__content h1 em { display: inline-block; }
+.hero__line { display: block; white-space: nowrap; }
+html[lang="vi"] .hero__content .eyebrow { max-width: 100%; font-size: .64rem; line-height: 1.55; letter-spacing: .11em; white-space: nowrap; }
 html[lang="vi"] .hero__content h1 { max-width: 560px; font-size: clamp(2.7rem, 4.7vw, 4.5rem); line-height: 1.04; }
 html[lang="vi"] .hero__content > p:not(.eyebrow) { max-width: 480px; font-size: 1rem; }
 .hero__content h1 em { color: var(--blush-deep); font-weight: inherit; }
 .hero__content > p:not(.eyebrow) { max-width: 520px; color: #5c5e59; font-size: 1.12rem; }
+html[lang="vi"] .hero__copy { white-space: nowrap; }
 .hero__note { position: absolute; z-index: 2; right: max(24px, calc((100vw - 1160px) / 2)); bottom: 30px; margin: 0; padding-left: 30px; color: #64645f; font: italic 1rem/1.4 var(--serif); }
 .hero__note::before { position: absolute; top: 50%; left: 0; width: 20px; border-top: 1px solid; content: ""; }
 .button-row { display: flex; align-items: center; gap: 26px; margin-top: 35px; }
