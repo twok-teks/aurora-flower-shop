@@ -42,17 +42,17 @@ export function escapeHtml(value = "") {
 }
 
 export function productCard(product) {
-  const image = product.image_url || fallbackImage;
+  const image = product.image || product.image_url || fallbackImage;
   const name = getLanguage() === "en" && product.name_en ? product.name_en : product.name;
   const localizedDescription = getLanguage() === "en" && product.description_en ? product.description_en : product.description;
   const description = localizedDescription || t("product.fallback");
   const category = translateCategory(product.category);
   return `
-    <article class="product-card">
+    <button class="product-card product-card--button" type="button" data-product-id="${escapeHtml(product.id)}" aria-label="${escapeHtml(`${t("product.details")}: ${name}`)}">
       <div class="product-card__image-wrap">
         <img class="product-card__image" src="${escapeHtml(image)}" alt="${escapeHtml(name)}" loading="lazy">
         ${product.featured ? `<span class="badge badge--featured">${t("product.featured")}</span>` : ""}
-        ${!product.in_stock ? `<span class="badge badge--sold">${t("product.sold")}</span>` : ""}
+        ${product.in_stock === false ? `<span class="badge badge--sold">${t("product.sold")}</span>` : ""}
       </div>
       <div class="product-card__body">
         <div class="product-card__meta">
@@ -61,11 +61,11 @@ export function productCard(product) {
         </div>
         <h3>${escapeHtml(name)}</h3>
         <p>${escapeHtml(description)}</p>
-        <span class="stock ${product.in_stock ? "stock--in" : "stock--out"}">
-          ${product.in_stock ? t("product.available") : t("product.unavailable")}
+        <span class="stock ${product.in_stock === false ? "stock--out" : "stock--in"}">
+          ${product.in_stock === false ? t("product.unavailable") : t("product.available")}
         </span>
       </div>
-    </article>`;
+    </button>`;
 }
 
 export function showMessage(element, message, type = "info") {
