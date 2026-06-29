@@ -2,12 +2,22 @@ import { demoProducts } from "./demo-products.js";
 import { escapeHtml, formatPrice, initNavigation, initScrollAnimations, productCard } from "./ui.js";
 import { getLanguage, initLanguage, t, translateCategory } from "./i18n.js";
 
+const shopCategories = [
+  { category: "All", page: "shop.html" },
+  { category: "Regular Bouquets", page: "shop-regular-bouquets.html" },
+  { category: "Hoa Cam Binh", page: "shop-hoa-cam-binh.html" },
+  { category: "Seasonal Bouquets", page: "shop-seasonal-bouquets.html" },
+  { category: "Company Ceremonial Bouquets", page: "shop-company-ceremonial.html" },
+  { category: "Memorial Bouquets", page: "shop-memorial.html" },
+];
+
 const grid = document.querySelector("[data-products-grid]");
 const status = document.querySelector("[data-products-status]");
 const filters = document.querySelector("[data-category-filters]");
 const page = document.body.dataset.page;
+const pageCategory = document.body.dataset.shopCategory || "All";
 
-let activeCategory = "All";
+let activeCategory = pageCategory;
 let carouselFrame;
 let suppressProductClick = false;
 
@@ -23,20 +33,44 @@ function productsForCategory() {
   return demoProducts.filter((product) => product.category === activeCategory);
 }
 
+function productImages(product) {
+  if (Array.isArray(product.images) && product.images.length) return product.images;
+  return [product.image || product.image_url].filter(Boolean);
+}
+
+function categoryLabel(category) {
+  return category === "All" ? t("catalog.all") : translateCategory(category);
+}
+
+function updateDocumentTitle() {
+  if (page !== "shop") return;
+  document.title = `${categoryLabel(pageCategory)} | Aurora`;
+}
+
 function renderFilters() {
-  if (!filters || page !== "shop") return;
-  const categories = ["All", ...new Set(demoProducts.map((product) => product.category))];
-  filters.innerHTML = categories.map((category) => `
-    <button class="filter-button ${category === activeCategory ? "is-active" : ""}" type="button" data-category="${escapeHtml(category)}">
-      ${escapeHtml(category === "All" ? t("catalog.all") : translateCategory(category))}
-    </button>`).join("");
+  if (!filters || page !== "shop" || pageCategory !== "All") return;
+  filters.innerHTML = `
+    <label class="category-select__label" for="catalog-category">${escapeHtml(t("shop.chooseCategory"))}</label>
+    <div class="category-select__wrap">
+      <select class="category-select" id="catalog-category" data-category-select aria-label="${escapeHtml(t("shop.filter"))}">
+        ${shopCategories.map(({ category }) => `
+          <option value="${escapeHtml(category)}" ${category === activeCategory ? "selected" : ""}>
+            ${escapeHtml(categoryLabel(category))}
+          </option>`).join("")}
+      </select>
+    </div>`;
 }
 
 function renderShopGrid() {
   if (!grid) return;
-  if (status) status.hidden = true;
+  const products = productsForCategory();
+  if (status) {
+    status.hidden = products.length > 0;
+    if (!products.length) status.textContent = t("catalog.empty");
+  }
   grid.className = "product-grid product-grid--shop";
-  grid.innerHTML = productsForCategory().map(productCard).join("");
+  grid.innerHTML = products.map(productCard).join("");
+  initProductCardSwipes(grid);
   initScrollAnimations(grid);
 }
 
@@ -51,6 +85,7 @@ function renderCarousel() {
         ${cards}
       </div>
     </div>`;
+  initProductCardSwipes(grid);
   initCarousel();
 }
 
@@ -59,6 +94,7 @@ function render() {
   else {
     renderFilters();
     renderShopGrid();
+    updateDocumentTitle();
   }
 }
 
@@ -104,6 +140,7 @@ function initCarousel() {
   carousel.addEventListener("mouseenter", () => { paused = true; });
   carousel.addEventListener("mouseleave", () => { paused = reducedMotion; });
   carousel.addEventListener("pointerdown", (event) => {
+    if (event.target.closest("[data-product-image-next], .product-card__image-wrap")) return;
     dragging = true;
     paused = true;
     moved = 0;
@@ -150,6 +187,8 @@ function initCarousel() {
 function openProductModal(product) {
   const { name, description } = localizedProduct(product);
   const category = translateCategory(product.category);
+  const images = productImages(product);
+  const image = images[0] || product.image;
   const modal = document.createElement("div");
   modal.className = "product-modal";
   modal.setAttribute("role", "dialog");
@@ -158,7 +197,13 @@ function openProductModal(product) {
   modal.innerHTML = `
     <div class="product-modal__card">
       <button class="product-modal__close" type="button" data-modal-close aria-label="${escapeHtml(t("product.close"))}">&times;</button>
-      <img src="${escapeHtml(product.image)}" alt="${escapeHtml(name)}">
+      <div class="product-modal__media" data-modal-image-swipe>
+        <img src="${escapeHtml(image)}" alt="${escapeHtml(name)}" data-modal-image data-modal-image-index="0">
+        ${images.length > 1 ? `
+          <button class="product-card__image-next product-modal__image-next" type="button" data-modal-image-next aria-label="${escapeHtml(t("product.nextImage"))}">
+            <span aria-hidden="true">&rsaquo;</span>
+          </button>` : ""}
+      </div>
       <div class="product-modal__content">
         <p class="eyebrow">${escapeHtml(category)}</p>
         <h2>${escapeHtml(name)}</h2>
@@ -175,6 +220,15 @@ function openProductModal(product) {
     if (event.key === "Escape") close();
   };
 
+  const cycleModalImage = (direction = 1) => {
+    const image = modal.querySelector("[data-modal-image]");
+    if (!image || images.length < 2) return;
+    const currentIndex = Number.parseInt(image.dataset.modalImageIndex || "0", 10);
+    const nextIndex = (currentIndex + direction + images.length) % images.length;
+    image.dataset.modalImageIndex = String(nextIndex);
+    image.src = images[nextIndex];
+  };
+
   const close = () => {
     modal.classList.remove("is-visible");
     document.body.classList.remove("modal-open");
@@ -183,8 +237,14 @@ function openProductModal(product) {
   };
 
   modal.addEventListener("click", (event) => {
+    const nextButton = event.target.closest("[data-modal-image-next]");
+    if (nextButton) {
+      cycleModalImage();
+      return;
+    }
     if (event.target === modal || event.target.closest("[data-modal-close]")) close();
   });
+  initImageSwipe(modal.querySelector("[data-modal-image-swipe]"), (direction) => cycleModalImage(direction));
   document.addEventListener("keydown", onKeydown);
 
   document.body.append(modal);
@@ -198,19 +258,95 @@ function openProductById(id) {
   if (product) openProductModal(product);
 }
 
+function cycleProductImage(card) {
+  const product = demoProducts.find((item) => item.id === card?.dataset.productId);
+  const image = card?.querySelector("[data-product-image]");
+  if (!product || !image) return;
+
+  const images = productImages(product);
+  if (images.length < 2) return;
+
+  const currentIndex = Number.parseInt(image.dataset.productImageIndex || "0", 10);
+  const nextIndex = (currentIndex + 1) % images.length;
+  image.dataset.productImageIndex = String(nextIndex);
+  image.src = images[nextIndex];
+}
+
+function initImageSwipe(target, onSwipe) {
+  if (!target) return;
+
+  let pointerId;
+  let startX = 0;
+  let startY = 0;
+
+  target.addEventListener("pointerdown", (event) => {
+    if (event.target.closest("button, a")) return;
+    pointerId = event.pointerId;
+    startX = event.clientX;
+    startY = event.clientY;
+    target.setPointerCapture?.(pointerId);
+  });
+
+  target.addEventListener("pointerup", (event) => {
+    if (event.pointerId !== pointerId) return;
+    const deltaX = event.clientX - startX;
+    const deltaY = event.clientY - startY;
+    pointerId = undefined;
+    target.releasePointerCapture?.(event.pointerId);
+
+    if (Math.abs(deltaX) < 36 || Math.abs(deltaX) < Math.abs(deltaY) * 1.15) return;
+    onSwipe(deltaX < 0 ? 1 : -1);
+  });
+
+  target.addEventListener("pointercancel", (event) => {
+    if (event.pointerId !== pointerId) return;
+    pointerId = undefined;
+    target.releasePointerCapture?.(event.pointerId);
+  });
+}
+
+function initProductCardSwipes(root) {
+  root?.querySelectorAll("[data-product-id]").forEach((card) => {
+    const target = card.querySelector(".product-card__image-wrap");
+    initImageSwipe(target, (direction) => {
+      const product = demoProducts.find((item) => item.id === card.dataset.productId);
+      const image = card.querySelector("[data-product-image]");
+      if (!product || !image) return;
+
+      const images = productImages(product);
+      if (images.length < 2) return;
+
+      const currentIndex = Number.parseInt(image.dataset.productImageIndex || "0", 10);
+      const nextIndex = (currentIndex + direction + images.length) % images.length;
+      image.dataset.productImageIndex = String(nextIndex);
+      image.src = images[nextIndex];
+      suppressProductClick = true;
+      window.setTimeout(() => { suppressProductClick = false; }, 120);
+    });
+  });
+}
+
 initLanguage();
 initNavigation();
 initScrollAnimations();
 render();
 
-filters?.addEventListener("click", (event) => {
-  const button = event.target.closest("[data-category]");
-  if (!button) return;
-  activeCategory = button.dataset.category;
-  render();
+filters?.addEventListener("change", (event) => {
+  const select = event.target.closest("[data-category-select]");
+  if (!select) return;
+  activeCategory = select.value;
+  renderShopGrid();
 });
 
 grid?.addEventListener("click", (event) => {
+  const nextButton = event.target.closest("[data-product-image-next]");
+  if (nextButton) {
+    event.preventDefault();
+    event.stopPropagation();
+    cycleProductImage(nextButton.closest("[data-product-id]"));
+    return;
+  }
+
   const card = event.target.closest("[data-product-id]");
   if (!card) return;
   openProductById(card.dataset.productId);

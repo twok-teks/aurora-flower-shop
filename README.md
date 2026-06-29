@@ -39,7 +39,7 @@ aurora-flower-shop/
 │   ├── schema.sql            # Tables, trigger, RLS, and Storage policies
 │   └── seed.sql              # Optional sample products
 ├── index.html                # Landing page and featured products
-├── shop.html                 # Full catalog and category filters
+├── shop.html                 # Full catalog and category dropdown
 ├── contact.html              # Contact details and social links
 ├── admin-login.html          # Private studio sign-in
 └── admin.html                # Product management dashboard
@@ -96,7 +96,7 @@ The full structure is already generated above. Shared behavior lives in small Ja
 The complete, deployable code is in this repository. Important entry points are:
 
 - [`index.html`](index.html): hero, welcome, featured products, story, contact, and footer.
-- [`shop.html`](shop.html): all active products and category filters generated from live data.
+- [`shop.html`](shop.html): all active products and category dropdown generated from the catalog.
 - [`admin-login.html`](admin-login.html): email/password sign-in and admin verification.
 - [`admin.html`](admin.html): product form, list, editing, deletion, stock/featured/visibility flags, and image preview.
 
@@ -154,7 +154,7 @@ To add a domain later, open the Pages project, choose **Custom domains > Set up 
 
 - [ ] Home page loads and the hero image has useful alt text.
 - [ ] Featured section shows only active featured products.
-- [ ] Shop loads all active products and category filters work.
+- [ ] Shop loads all active products and the category dropdown works.
 - [ ] Prices, descriptions, badges, and availability are correct.
 - [ ] Product images display; products without images show the floral placeholder.
 - [ ] Admin signs in and refresh retains the session.
@@ -194,7 +194,7 @@ For a direct RLS sanity check, sign out, open browser DevTools on the shop, and 
 
 Good next additions, in roughly this order:
 
-1. Add product search and URL-based category links.
+1. Add product search and richer URL-based category metadata.
 2. Add SEO metadata, Open Graph images, sitemap, and structured product data.
 3. Resize/compress uploads in the browser or with a Supabase Edge Function.
 4. Add a spam-protected inquiry form using Cloudflare Turnstile and an email service.

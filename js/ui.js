@@ -42,30 +42,40 @@ export function escapeHtml(value = "") {
 }
 
 export function productCard(product) {
-  const image = product.image || product.image_url || fallbackImage;
+  const images = Array.isArray(product.images) && product.images.length
+    ? product.images
+    : [product.image || product.image_url || fallbackImage];
+  const image = images[0] || fallbackImage;
   const name = getLanguage() === "en" && product.name_en ? product.name_en : product.name;
   const localizedDescription = getLanguage() === "en" && product.description_en ? product.description_en : product.description;
   const description = localizedDescription || t("product.fallback");
   const category = translateCategory(product.category);
+  const detailsLabel = `${t("product.details")}: ${name}`;
   return `
-    <button class="product-card product-card--button" type="button" data-product-id="${escapeHtml(product.id)}" aria-label="${escapeHtml(`${t("product.details")}: ${name}`)}">
-      <div class="product-card__image-wrap">
-        <img class="product-card__image" src="${escapeHtml(image)}" alt="${escapeHtml(name)}" loading="lazy">
-        ${product.featured ? `<span class="badge badge--featured">${t("product.featured")}</span>` : ""}
-        ${product.in_stock === false ? `<span class="badge badge--sold">${t("product.sold")}</span>` : ""}
-      </div>
-      <div class="product-card__body">
-        <div class="product-card__meta">
-          <span>${escapeHtml(category)}</span>
-          <strong>${formatPrice(product.price)}</strong>
+    <article class="product-card" data-product-id="${escapeHtml(product.id)}">
+      <button class="product-card__details" type="button" data-product-open aria-label="${escapeHtml(detailsLabel)}">
+        <div class="product-card__image-wrap">
+          <img class="product-card__image" src="${escapeHtml(image)}" alt="${escapeHtml(name)}" loading="lazy" data-product-image data-product-image-index="0">
+          ${product.featured ? `<span class="badge badge--featured">${t("product.featured")}</span>` : ""}
+          ${product.in_stock === false ? `<span class="badge badge--sold">${t("product.sold")}</span>` : ""}
         </div>
-        <h3>${escapeHtml(name)}</h3>
-        <p>${escapeHtml(description)}</p>
-        <span class="stock ${product.in_stock === false ? "stock--out" : "stock--in"}">
-          ${product.in_stock === false ? t("product.unavailable") : t("product.available")}
-        </span>
-      </div>
-    </button>`;
+        <div class="product-card__body">
+          <div class="product-card__meta">
+            <span>${escapeHtml(category)}</span>
+            <strong>${formatPrice(product.price)}</strong>
+          </div>
+          <h3>${escapeHtml(name)}</h3>
+          <p>${escapeHtml(description)}</p>
+          <span class="stock ${product.in_stock === false ? "stock--out" : "stock--in"}">
+            ${product.in_stock === false ? t("product.unavailable") : t("product.available")}
+          </span>
+        </div>
+      </button>
+      ${images.length > 1 ? `
+        <button class="product-card__image-next" type="button" data-product-image-next aria-label="${escapeHtml(t("product.nextImage"))}">
+          <span aria-hidden="true">&rsaquo;</span>
+        </button>` : ""}
+    </article>`;
 }
 
 export function showMessage(element, message, type = "info") {
@@ -105,6 +115,15 @@ export function initNavigation() {
   const button = document.querySelector("[data-menu-button]");
   const nav = document.querySelector("[data-nav]");
   const header = document.querySelector(".site-header");
+  const dropdowns = [...document.querySelectorAll("[data-nav-dropdown]")];
+
+  const closeDropdowns = (except) => {
+    dropdowns.forEach((dropdown) => {
+      if (dropdown === except) return;
+      dropdown.classList.remove("is-open");
+      dropdown.querySelector("[data-nav-dropdown-button]")?.setAttribute("aria-expanded", "false");
+    });
+  };
 
   if (header) {
     let lastScrollY = window.scrollY;
@@ -138,15 +157,37 @@ export function initNavigation() {
   }
 
   if (!button || !nav) return;
+  dropdowns.forEach((dropdown) => {
+    const dropdownButton = dropdown.querySelector("[data-nav-dropdown-button]");
+    dropdownButton?.addEventListener("click", (event) => {
+      event.stopPropagation();
+      const open = dropdown.classList.contains("is-open");
+      closeDropdowns(dropdown);
+      dropdown.classList.toggle("is-open", !open);
+      dropdownButton.setAttribute("aria-expanded", String(!open));
+      header?.classList.remove("is-hidden");
+    });
+  });
+
   button.addEventListener("click", () => {
     const open = button.getAttribute("aria-expanded") === "true";
     button.setAttribute("aria-expanded", String(!open));
     nav.classList.toggle("is-open", !open);
+    if (open) closeDropdowns();
     header?.classList.remove("is-hidden");
   });
   nav.addEventListener("click", (event) => {
     if (!event.target.closest("a")) return;
     button.setAttribute("aria-expanded", "false");
     nav.classList.remove("is-open");
+    closeDropdowns();
+  });
+  document.addEventListener("click", (event) => {
+    if (event.target.closest("[data-nav-dropdown]")) return;
+    closeDropdowns();
+  });
+  document.addEventListener("keydown", (event) => {
+    if (event.key !== "Escape") return;
+    closeDropdowns();
   });
 }

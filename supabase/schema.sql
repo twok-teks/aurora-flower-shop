@@ -15,7 +15,7 @@ create table if not exists public.products (
   price numeric(10, 2) not null check (price >= 0),
   description text not null default '' check (char_length(description) <= 1000),
   description_en text check (description_en is null or char_length(description_en) <= 1000),
-  category text not null default 'Bouquets' check (char_length(category) between 2 and 60),
+  category text not null default 'Regular Bouquets' check (char_length(category) between 2 and 60),
   image_url text,
   image_path text,
   in_stock boolean not null default true,
