@@ -192,6 +192,7 @@ html[lang="vi"] .hero__content > p:not(.eyebrow) { max-width: 480px; font-size: 
 .page-hero::after { position: absolute; z-index: -1; inset: 0; background: var(--hero-overlay, linear-gradient(180deg, rgba(255, 250, 245, .84), rgba(255, 250, 245, .64))); content: ""; opacity: var(--hero-overlay-opacity, 0); }
 .page-hero h1 { margin-bottom: 18px; font-size: clamp(3.5rem, 7vw, 6rem); }.page-hero > p:last-child { max-width: 650px; margin: auto; color: var(--muted); }
 body[data-page="shop"] .page-hero h1 { letter-spacing: 0.01em; line-height: 1.12; }
+body[data-page="shop"][data-shop-category="All"] .page-hero h1 { max-width: min(920px, 100%); margin-inline: auto; font-size: clamp(2.15rem, 7.8vw, 5.35rem); line-height: 1.08; }
 .page-hero--all { --hero-image: url("../assets/aurora-boutique.png"); --hero-image-opacity: .34; --hero-overlay-opacity: 1; }
 .page-hero--company { --hero-image: url("../assets/aurora-boutique.png"); --hero-image-opacity: .58; --hero-overlay-opacity: 1; --hero-overlay: linear-gradient(120deg, rgba(255, 250, 245, .9), rgba(248, 223, 202, .72), rgba(216, 230, 213, .66)); --hero-position: 58% center; }
 .page-hero--regular { --hero-image: url("../assets/demo-flower-01.png"); --hero-image-opacity: .64; --hero-overlay-opacity: 1; --hero-overlay: linear-gradient(135deg, rgba(255, 250, 245, .88), rgba(246, 220, 227, .66)); --hero-position: center 58%; }
