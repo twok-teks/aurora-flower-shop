@@ -16,6 +16,7 @@ create table if not exists public.products (
   description text not null default '' check (char_length(description) <= 1000),
   description_en text check (description_en is null or char_length(description_en) <= 1000),
   category text not null default 'Regular Bouquets' check (char_length(category) between 2 and 60),
+  subcategory text check (subcategory is null or char_length(subcategory) between 2 and 60),
   image_url text,
   image_path text,
   in_stock boolean not null default true,
@@ -28,6 +29,7 @@ create table if not exists public.products (
 -- These statements also upgrade an earlier single-language installation safely.
 alter table public.products add column if not exists name_en text;
 alter table public.products add column if not exists description_en text;
+alter table public.products add column if not exists subcategory text;
 
 create or replace function public.set_updated_at()
 returns trigger

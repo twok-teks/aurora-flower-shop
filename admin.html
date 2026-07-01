@@ -28,6 +28,7 @@
             <label for="name">Tên sản phẩm (Vietnamese) *</label><input id="name" name="name" required minlength="2" maxlength="120">
             <label for="name_en">Product name (English)</label><input id="name_en" name="name_en" minlength="2" maxlength="120">
             <div class="form-row"><div><label for="price">Price (VND) *</label><input id="price" name="price" type="number" min="0" step="1000" required></div><div><label for="category">Category *</label><input id="category" name="category" list="categories" required maxlength="60"><datalist id="categories"><option value="Regular Bouquets"><option value="Hoa Cam Binh"><option value="Seasonal Bouquets"><option value="Company Ceremonial Bouquets"><option value="Memorial Bouquets"></datalist></div></div>
+            <label for="subcategory">Subcategory</label><input id="subcategory" name="subcategory" list="subcategories" maxlength="60"><datalist id="subcategories"><option value="Bo Hong Do"><option value="Bo Hong Phan"><option value="Bo Hoa Mix"></datalist>
             <label for="description">Mô tả (Vietnamese)</label><textarea id="description" name="description" rows="4" maxlength="1000"></textarea>
             <label for="description_en">Description (English)</label><textarea id="description_en" name="description_en" rows="4" maxlength="1000"></textarea>
             <label for="image">Product image</label><input id="image" name="image" type="file" accept="image/jpeg,image/png,image/webp,image/gif"><small>JPG, PNG, WebP, or GIF. Maximum 5 MB.</small>

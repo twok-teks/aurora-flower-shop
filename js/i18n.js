@@ -74,6 +74,8 @@ const translations = {
     "product.available": "Còn hàng",
     "product.unavailable": "Tạm hết hàng",
     "product.fallback": "Một thiết kế theo mùa được Aurora chăm chút riêng cho bạn.",
+    "product.viewImage": "Xem ảnh lớn",
+    "product.closeImage": "Đóng ảnh lớn",
     "category.Company Ceremonial Bouquets": "Hoa chúc mừng doanh nghiệp",
     "category.Regular Bouquets": "Hoa tươi",
     "category.Memorial Bouquets": "Hoa chia buồn",
@@ -82,7 +84,10 @@ const translations = {
     "category.Bouquets": "Bó hoa",
     "category.Arrangements": "Hoa cắm bình",
     "category.Seasonal": "Hoa theo mùa",
-    "category.Plants": "Cây xanh"
+    "category.Plants": "Cây xanh",
+    "subcategory.Bo Hong Do": "Bó hồng đỏ",
+    "subcategory.Bo Hong Phan": "Bó hồng phấn",
+    "subcategory.Bo Hoa Mix": "Bó hoa mix"
   },
   en: {
     "nav.home": "Home",
@@ -159,6 +164,8 @@ const translations = {
     "product.available": "Available",
     "product.unavailable": "Currently unavailable",
     "product.fallback": "A thoughtfully arranged seasonal selection.",
+    "product.viewImage": "View full image",
+    "product.closeImage": "Close full image",
     "category.Company Ceremonial Bouquets": "Company Ceremonial",
     "category.Regular Bouquets": "Regular Bouquets",
     "category.Memorial Bouquets": "Memorial Bouquets",
@@ -167,7 +174,10 @@ const translations = {
     "category.Bouquets": "Bouquets",
     "category.Arrangements": "Arrangements",
     "category.Seasonal": "Seasonal",
-    "category.Plants": "Plants"
+    "category.Plants": "Plants",
+    "subcategory.Bo Hong Do": "Red Rose Bouquets",
+    "subcategory.Bo Hong Phan": "Pink Rose Bouquets",
+    "subcategory.Bo Hoa Mix": "Mixed Bouquets"
   }
 };
 
@@ -184,6 +194,11 @@ export function getLanguage() {
 export function translateCategory(category) {
   const key = `category.${category}`;
   return translations[language][key] ?? translations.vi[key] ?? category;
+}
+
+export function translateSubcategory(subcategory) {
+  const key = `subcategory.${subcategory}`;
+  return translations[language][key] ?? translations.vi[key] ?? subcategory;
 }
 
 function applyLanguage() {

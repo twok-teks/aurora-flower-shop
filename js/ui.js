@@ -1,6 +1,6 @@
-import { getLanguage, t, translateCategory } from "./i18n.js";
+import { getLanguage, t, translateCategory, translateSubcategory } from "./i18n.js";
 
-const fallbackImage = `data:image/svg+xml,${encodeURIComponent(`
+export const fallbackImage = `data:image/svg+xml,${encodeURIComponent(`
   <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 600 450">
     <rect width="600" height="450" fill="#f3e9dc"/>
     <circle cx="300" cy="192" r="74" fill="#f7d6e0"/>
@@ -50,18 +50,19 @@ export function productCard(product) {
   const localizedDescription = getLanguage() === "en" && product.description_en ? product.description_en : product.description;
   const description = localizedDescription || t("product.fallback");
   const category = translateCategory(product.category);
+  const collection = product.subcategory ? translateSubcategory(product.subcategory) : category;
   const detailsLabel = `${t("product.details")}: ${name}`;
   return `
     <article class="product-card" data-product-id="${escapeHtml(product.id)}">
       <button class="product-card__details" type="button" data-product-open aria-label="${escapeHtml(detailsLabel)}">
         <div class="product-card__image-wrap">
-          <img class="product-card__image" src="${escapeHtml(image)}" alt="${escapeHtml(name)}" loading="lazy" data-product-image data-product-image-index="0">
+          <img class="product-card__image" src="${escapeHtml(image)}" alt="${escapeHtml(name)}" loading="lazy" data-product-image data-product-image-index="0" onerror="this.onerror=null;this.src='${escapeHtml(fallbackImage)}'">
           ${product.featured ? `<span class="badge badge--featured">${t("product.featured")}</span>` : ""}
           ${product.in_stock === false ? `<span class="badge badge--sold">${t("product.sold")}</span>` : ""}
         </div>
         <div class="product-card__body">
           <div class="product-card__meta">
-            <span>${escapeHtml(category)}</span>
+            <span>${escapeHtml(collection)}</span>
             <strong>${formatPrice(product.price)}</strong>
           </div>
           <h3>${escapeHtml(name)}</h3>
@@ -71,10 +72,6 @@ export function productCard(product) {
           </span>
         </div>
       </button>
-      ${images.length > 1 ? `
-        <button class="product-card__image-next" type="button" data-product-image-next aria-label="${escapeHtml(t("product.nextImage"))}">
-          <span aria-hidden="true">&rsaquo;</span>
-        </button>` : ""}
     </article>`;
 }
 

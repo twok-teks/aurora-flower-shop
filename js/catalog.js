@@ -1,6 +1,6 @@
 import { demoProducts } from "./demo-products.js";
-import { escapeHtml, formatPrice, initNavigation, initScrollAnimations, productCard } from "./ui.js";
-import { getLanguage, initLanguage, t, translateCategory } from "./i18n.js";
+import { escapeHtml, fallbackImage, formatPrice, initNavigation, initScrollAnimations, productCard } from "./ui.js";
+import { getLanguage, initLanguage, t, translateCategory, translateSubcategory } from "./i18n.js";
 
 const shopCategories = [
   { category: "All", page: "shop.html" },
@@ -11,6 +11,10 @@ const shopCategories = [
   { category: "Memorial Bouquets", page: "shop-memorial.html" },
 ];
 
+const shopSubcategories = {
+  "Regular Bouquets": ["Bo Hong Do", "Bo Hong Phan", "Bo Hoa Mix"],
+};
+
 const grid = document.querySelector("[data-products-grid]");
 const status = document.querySelector("[data-products-status]");
 const filters = document.querySelector("[data-category-filters]");
@@ -18,6 +22,7 @@ const page = document.body.dataset.page;
 const pageCategory = document.body.dataset.shopCategory || "All";
 
 let activeCategory = pageCategory;
+let activeSubcategory = "All";
 let carouselFrame;
 let suppressProductClick = false;
 
@@ -29,8 +34,11 @@ function localizedProduct(product) {
 }
 
 function productsForCategory() {
-  if (activeCategory === "All") return demoProducts;
-  return demoProducts.filter((product) => product.category === activeCategory);
+  const categoryProducts = activeCategory === "All"
+    ? demoProducts
+    : demoProducts.filter((product) => product.category === activeCategory);
+  if (activeSubcategory === "All") return categoryProducts;
+  return categoryProducts.filter((product) => product.subcategory === activeSubcategory);
 }
 
 function productImages(product) {
@@ -42,23 +50,41 @@ function categoryLabel(category) {
   return category === "All" ? t("catalog.all") : translateCategory(category);
 }
 
+function subcategoryLabel(subcategory) {
+  return subcategory === "All" ? t("catalog.all") : translateSubcategory(subcategory);
+}
+
 function updateDocumentTitle() {
   if (page !== "shop") return;
   document.title = `${categoryLabel(pageCategory)} | Aurora`;
 }
 
 function renderFilters() {
-  if (!filters || page !== "shop" || pageCategory !== "All") return;
+  if (!filters || page !== "shop") return;
+  const subcategories = shopSubcategories[activeCategory] || [];
+  const subcategoryValue = subcategories.includes(activeSubcategory) ? activeSubcategory : "All";
+  if (activeSubcategory !== subcategoryValue) activeSubcategory = subcategoryValue;
   filters.innerHTML = `
-    <label class="category-select__label" for="catalog-category">${escapeHtml(t("shop.chooseCategory"))}</label>
-    <div class="category-select__wrap">
-      <select class="category-select" id="catalog-category" data-category-select aria-label="${escapeHtml(t("shop.filter"))}">
-        ${shopCategories.map(({ category }) => `
-          <option value="${escapeHtml(category)}" ${category === activeCategory ? "selected" : ""}>
-            ${escapeHtml(categoryLabel(category))}
-          </option>`).join("")}
-      </select>
-    </div>`;
+    ${pageCategory === "All" ? `
+      <label class="category-select__label" for="catalog-category">${escapeHtml(t("shop.chooseCategory"))}</label>
+      <div class="category-select__wrap">
+        <select class="category-select" id="catalog-category" data-category-select aria-label="${escapeHtml(t("shop.filter"))}">
+          ${shopCategories.map(({ category }) => `
+            <option value="${escapeHtml(category)}" ${category === activeCategory ? "selected" : ""}>
+              ${escapeHtml(categoryLabel(category))}
+            </option>`).join("")}
+        </select>
+      </div>` : ""}
+    ${subcategories.length ? `
+      <label class="category-select__label" for="catalog-subcategory">${escapeHtml(t("shop.filter"))}</label>
+      <div class="category-select__wrap">
+        <select class="category-select" id="catalog-subcategory" data-subcategory-select aria-label="${escapeHtml(t("shop.filter"))}">
+          ${["All", ...subcategories].map((subcategory) => `
+            <option value="${escapeHtml(subcategory)}" ${subcategory === activeSubcategory ? "selected" : ""}>
+              ${escapeHtml(subcategoryLabel(subcategory))}
+            </option>`).join("")}
+        </select>
+      </div>` : ""}`;
 }
 
 function renderShopGrid() {
@@ -70,7 +96,6 @@ function renderShopGrid() {
   }
   grid.className = "product-grid product-grid--shop";
   grid.innerHTML = products.map(productCard).join("");
-  initProductCardSwipes(grid);
   initScrollAnimations(grid);
 }
 
@@ -85,7 +110,6 @@ function renderCarousel() {
         ${cards}
       </div>
     </div>`;
-  initProductCardSwipes(grid);
   initCarousel();
 }
 
@@ -140,7 +164,7 @@ function initCarousel() {
   carousel.addEventListener("mouseenter", () => { paused = true; });
   carousel.addEventListener("mouseleave", () => { paused = reducedMotion; });
   carousel.addEventListener("pointerdown", (event) => {
-    if (event.target.closest("[data-product-image-next], .product-card__image-wrap")) return;
+    if (event.target.closest(".product-card__image-wrap")) return;
     dragging = true;
     paused = true;
     moved = 0;
@@ -187,8 +211,8 @@ function initCarousel() {
 function openProductModal(product) {
   const { name, description } = localizedProduct(product);
   const category = translateCategory(product.category);
-  const images = productImages(product);
-  const image = images[0] || product.image;
+  const collection = product.subcategory ? translateSubcategory(product.subcategory) : category;
+  const image = productImages(product)[0] || fallbackImage;
   const modal = document.createElement("div");
   modal.className = "product-modal";
   modal.setAttribute("role", "dialog");
@@ -197,15 +221,11 @@ function openProductModal(product) {
   modal.innerHTML = `
     <div class="product-modal__card">
       <button class="product-modal__close" type="button" data-modal-close aria-label="${escapeHtml(t("product.close"))}">&times;</button>
-      <div class="product-modal__media" data-modal-image-swipe>
-        <img src="${escapeHtml(image)}" alt="${escapeHtml(name)}" data-modal-image data-modal-image-index="0">
-        ${images.length > 1 ? `
-          <button class="product-card__image-next product-modal__image-next" type="button" data-modal-image-next aria-label="${escapeHtml(t("product.nextImage"))}">
-            <span aria-hidden="true">&rsaquo;</span>
-          </button>` : ""}
-      </div>
+      <button class="product-modal__media" type="button" data-full-image-open aria-label="${escapeHtml(t("product.viewImage"))}">
+        <img src="${escapeHtml(image)}" alt="${escapeHtml(name)}" data-modal-image onerror="this.onerror=null;this.src='${escapeHtml(fallbackImage)}'">
+      </button>
       <div class="product-modal__content">
-        <p class="eyebrow">${escapeHtml(category)}</p>
+        <p class="eyebrow">${escapeHtml(collection)}</p>
         <h2>${escapeHtml(name)}</h2>
         <strong>${formatPrice(product.price)}</strong>
         <p>${escapeHtml(description)}</p>
@@ -217,16 +237,8 @@ function openProductModal(product) {
     </div>`;
 
   const onKeydown = (event) => {
+    if (document.querySelector("[data-full-image-viewer]")) return;
     if (event.key === "Escape") close();
-  };
-
-  const cycleModalImage = (direction = 1) => {
-    const image = modal.querySelector("[data-modal-image]");
-    if (!image || images.length < 2) return;
-    const currentIndex = Number.parseInt(image.dataset.modalImageIndex || "0", 10);
-    const nextIndex = (currentIndex + direction + images.length) % images.length;
-    image.dataset.modalImageIndex = String(nextIndex);
-    image.src = images[nextIndex];
   };
 
   const close = () => {
@@ -237,19 +249,47 @@ function openProductModal(product) {
   };
 
   modal.addEventListener("click", (event) => {
-    const nextButton = event.target.closest("[data-modal-image-next]");
-    if (nextButton) {
-      cycleModalImage();
+    if (event.target.closest("[data-full-image-open]")) {
+      openFullImage(image, name);
       return;
     }
     if (event.target === modal || event.target.closest("[data-modal-close]")) close();
   });
-  initImageSwipe(modal.querySelector("[data-modal-image-swipe]"), (direction) => cycleModalImage(direction));
   document.addEventListener("keydown", onKeydown);
 
   document.body.append(modal);
   document.body.classList.add("modal-open");
   requestAnimationFrame(() => modal.classList.add("is-visible"));
+}
+
+function openFullImage(image, name) {
+  const viewer = document.createElement("div");
+  viewer.className = "product-image-viewer";
+  viewer.dataset.fullImageViewer = "";
+  viewer.setAttribute("role", "dialog");
+  viewer.setAttribute("aria-modal", "true");
+  viewer.setAttribute("aria-label", t("product.viewImage"));
+  viewer.innerHTML = `
+    <button class="product-image-viewer__close" type="button" data-full-image-close aria-label="${escapeHtml(t("product.closeImage"))}">&times;</button>
+    <img src="${escapeHtml(image)}" alt="${escapeHtml(name)}" onerror="this.onerror=null;this.src='${escapeHtml(fallbackImage)}'">`;
+
+  const close = () => {
+    viewer.classList.remove("is-visible");
+    document.removeEventListener("keydown", onKeydown);
+    window.setTimeout(() => viewer.remove(), 160);
+  };
+
+  const onKeydown = (event) => {
+    if (event.key === "Escape") close();
+  };
+
+  viewer.addEventListener("click", (event) => {
+    if (event.target === viewer || event.target.closest("[data-full-image-close]")) close();
+  });
+
+  document.addEventListener("keydown", onKeydown);
+  document.body.append(viewer);
+  requestAnimationFrame(() => viewer.classList.add("is-visible"));
 }
 
 function openProductById(id) {
@@ -258,95 +298,25 @@ function openProductById(id) {
   if (product) openProductModal(product);
 }
 
-function cycleProductImage(card) {
-  const product = demoProducts.find((item) => item.id === card?.dataset.productId);
-  const image = card?.querySelector("[data-product-image]");
-  if (!product || !image) return;
-
-  const images = productImages(product);
-  if (images.length < 2) return;
-
-  const currentIndex = Number.parseInt(image.dataset.productImageIndex || "0", 10);
-  const nextIndex = (currentIndex + 1) % images.length;
-  image.dataset.productImageIndex = String(nextIndex);
-  image.src = images[nextIndex];
-}
-
-function initImageSwipe(target, onSwipe) {
-  if (!target) return;
-
-  let pointerId;
-  let startX = 0;
-  let startY = 0;
-
-  target.addEventListener("pointerdown", (event) => {
-    if (event.target.closest("button, a")) return;
-    pointerId = event.pointerId;
-    startX = event.clientX;
-    startY = event.clientY;
-    target.setPointerCapture?.(pointerId);
-  });
-
-  target.addEventListener("pointerup", (event) => {
-    if (event.pointerId !== pointerId) return;
-    const deltaX = event.clientX - startX;
-    const deltaY = event.clientY - startY;
-    pointerId = undefined;
-    target.releasePointerCapture?.(event.pointerId);
-
-    if (Math.abs(deltaX) < 36 || Math.abs(deltaX) < Math.abs(deltaY) * 1.15) return;
-    onSwipe(deltaX < 0 ? 1 : -1);
-  });
-
-  target.addEventListener("pointercancel", (event) => {
-    if (event.pointerId !== pointerId) return;
-    pointerId = undefined;
-    target.releasePointerCapture?.(event.pointerId);
-  });
-}
-
-function initProductCardSwipes(root) {
-  root?.querySelectorAll("[data-product-id]").forEach((card) => {
-    const target = card.querySelector(".product-card__image-wrap");
-    initImageSwipe(target, (direction) => {
-      const product = demoProducts.find((item) => item.id === card.dataset.productId);
-      const image = card.querySelector("[data-product-image]");
-      if (!product || !image) return;
-
-      const images = productImages(product);
-      if (images.length < 2) return;
-
-      const currentIndex = Number.parseInt(image.dataset.productImageIndex || "0", 10);
-      const nextIndex = (currentIndex + direction + images.length) % images.length;
-      image.dataset.productImageIndex = String(nextIndex);
-      image.src = images[nextIndex];
-      suppressProductClick = true;
-      window.setTimeout(() => { suppressProductClick = false; }, 120);
-    });
-  });
-}
-
 initLanguage();
 initNavigation();
 initScrollAnimations();
 render();
 
 filters?.addEventListener("change", (event) => {
-  const select = event.target.closest("[data-category-select]");
-  if (!select) return;
-  activeCategory = select.value;
+  const categorySelect = event.target.closest("[data-category-select]");
+  const subcategorySelect = event.target.closest("[data-subcategory-select]");
+  if (!categorySelect && !subcategorySelect) return;
+  if (categorySelect) {
+    activeCategory = categorySelect.value;
+    activeSubcategory = "All";
+  }
+  if (subcategorySelect) activeSubcategory = subcategorySelect.value;
+  renderFilters();
   renderShopGrid();
 });
 
 grid?.addEventListener("click", (event) => {
-  const nextButton = event.target.closest("[data-product-image-next]");
-  if (nextButton) {
-    event.preventDefault();
-    event.stopPropagation();
-    cycleProductImage(nextButton.closest("[data-product-id]"));
-    return;
-  }
-
   const card = event.target.closest("[data-product-id]");
   if (!card) return;
   openProductById(card.dataset.productId);

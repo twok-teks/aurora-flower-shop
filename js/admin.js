@@ -48,7 +48,7 @@ function renderProducts() {
       <img src="${escapeHtml(product.image_url || placeholder())}" alt="">
       <div>
         <h3>${escapeHtml(product.name)}</h3>
-        <p>${formatPrice(product.price)} &middot; ${escapeHtml(product.category)}</p>
+        <p>${formatPrice(product.price)} &middot; ${escapeHtml(product.category)}${product.subcategory ? ` &middot; ${escapeHtml(product.subcategory)}` : ""}</p>
         <div class="admin-product__tags">
           <span class="mini-tag">${product.in_stock ? "In stock" : "Out of stock"}</span>
           ${product.featured ? '<span class="mini-tag">Featured</span>' : ""}
@@ -94,6 +94,7 @@ function editProduct(id) {
   form.elements.name_en.value = product.name_en || "";
   form.elements.price.value = product.price;
   form.elements.category.value = product.category;
+  form.elements.subcategory.value = product.subcategory || "";
   form.elements.description.value = product.description || "";
   form.elements.description_en.value = product.description_en || "";
   form.elements.in_stock.checked = product.in_stock;
@@ -150,6 +151,7 @@ async function saveProduct(event) {
       name_en: values.get("name_en").trim() || null,
       price: Number(values.get("price")),
       category: values.get("category").trim(),
+      subcategory: values.get("subcategory").trim() || null,
       description: values.get("description").trim(),
       description_en: values.get("description_en").trim() || null,
       in_stock: values.get("in_stock") === "on",
