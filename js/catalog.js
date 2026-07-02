@@ -1,5 +1,5 @@
 import { demoProducts } from "./demo-products.js";
-import { escapeHtml, fallbackImage, formatPrice, initNavigation, initScrollAnimations, productCard } from "./ui.js";
+import { escapeHtml, fallbackImage, initNavigation, initScrollAnimations, productCard, productPrice } from "./ui.js";
 import { getLanguage, initLanguage, t, translateCategory, translateSubcategory } from "./i18n.js";
 
 const shopCategories = [
@@ -13,7 +13,73 @@ const shopCategories = [
 
 const shopSubcategories = {
   "Regular Bouquets": ["Bo Hong Do", "Bo Hong Phan", "Bo Hoa Mix"],
+  "Hoa Cam Binh": ["Lan Ho Diep", "Gio Hoa"],
 };
+
+const homeFeaturedOrder = [
+  "bo-pastel-mix-size-lon-3",
+  "chau-lan-ho-diep-size-lon-3",
+  "ke-hoa-chuc-mung-5",
+  "bo-100-hoa-hong-do",
+  "gio-hoa-6",
+  "ke-hoa-chuc-mung-4",
+  "bo-hong-phan-size-lon-5",
+  "chau-lan-ho-diep-size-lon-1",
+  "ke-hoa-chuc-mung-1",
+  "bo-hoa-mix-size-vua-2",
+  "gio-hoa-1",
+];
+
+const shopProductOrder = [
+  ...homeFeaturedOrder,
+  "bo-hong-do-size-vua-3",
+  "chau-lan-ho-diep-size-vua-2",
+  "ke-hoa-chuc-mung-3",
+  "bo-cam-tu-nho-1",
+  "gio-hoa-4",
+  "bo-hong-phan-mini-1",
+  "chau-lan-ho-diep-size-nho",
+  "bo-pastel-mix-size-vua-1",
+  "ke-hoa-chuc-mung-6",
+  "bo-hong-do-size-lon-4",
+  "gio-hoa-3",
+  "bo-hong-phan-size-nho-2",
+  "chau-lan-ho-diep-size-lon-2",
+  "bo-hoa-mix-size-vua-1",
+  "ke-hoa-chuc-mung-2",
+  "bo-hong-do-size-vua-1",
+  "gio-hoa-2",
+  "bo-pastel-mix-size-lon-1",
+  "chau-lan-ho-diep-size-vua-3",
+  "bo-hong-phan-size-lon-2",
+  "gio-hoa-5",
+  "bo-cam-tu-nho-2",
+  "chau-lan-ho-diep-size-vua-1",
+  "bo-hong-do-size-lon-2",
+  "bo-pastel-mix-size-vua-4",
+  "bo-hong-phan-size-nho-1",
+  "bo-hong-do-size-vua-4",
+  "bo-pastel-mix-size-nho-1",
+  "bo-hong-phan-size-lon-4",
+  "bo-hong-size-nho-1",
+  "bo-pastel-mix-size-vua-2",
+  "bo-hong-do-size-lon-1",
+  "bo-hong-phan-size-lon-1",
+  "bo-pastel-mix-size-lon-4",
+  "bo-hong-do-size-vua-2",
+  "bo-100-hoa-hong-phan",
+  "bo-pastel-mix-size-vua-3",
+  "bo-hong-phan-size-lon-3",
+  "bo-hong-do-size-lon-3",
+  "bo-pastel-mix-size-lon-2",
+  "ke-chia-buon-5",
+  "ke-chia-buon-4",
+  "ke-chia-buon-2",
+  "ke-chia-buon-3",
+  "ke-chia-buon-1",
+];
+
+const shopProductRank = new Map(shopProductOrder.map((id, index) => [id, index]));
 
 const grid = document.querySelector("[data-products-grid]");
 const status = document.querySelector("[data-products-status]");
@@ -37,8 +103,22 @@ function productsForCategory() {
   const categoryProducts = activeCategory === "All"
     ? demoProducts
     : demoProducts.filter((product) => product.category === activeCategory);
-  if (activeSubcategory === "All") return categoryProducts;
-  return categoryProducts.filter((product) => product.subcategory === activeSubcategory);
+  const filteredProducts = activeSubcategory === "All"
+    ? categoryProducts
+    : categoryProducts.filter((product) => product.subcategory === activeSubcategory);
+  return sortProductsForDisplay(filteredProducts);
+}
+
+function sortProductsForDisplay(products) {
+  return [...products].sort((a, b) => {
+    if (activeCategory === "All" && a.category !== b.category) {
+      if (a.category === "Memorial Bouquets") return 1;
+      if (b.category === "Memorial Bouquets") return -1;
+    }
+    if (a.featured !== b.featured) return a.featured ? -1 : 1;
+    return (shopProductRank.get(a.id) ?? Number.MAX_SAFE_INTEGER)
+      - (shopProductRank.get(b.id) ?? Number.MAX_SAFE_INTEGER);
+  });
 }
 
 function productImages(product) {
@@ -102,7 +182,13 @@ function renderShopGrid() {
 function renderCarousel() {
   if (!grid) return;
   if (status) status.hidden = true;
-  const cards = [...demoProducts, ...demoProducts].map(productCard).join("");
+  const featuredProducts = homeFeaturedOrder
+    .map((id) => demoProducts.find((product) => product.id === id && product.featured))
+    .filter(Boolean);
+  const products = featuredProducts.length
+    ? featuredProducts
+    : demoProducts.filter((product) => product.featured && product.category !== "Memorial Bouquets");
+  const cards = [...products, ...products].map(productCard).join("");
   grid.className = "flower-carousel";
   grid.innerHTML = `
     <div class="flower-carousel__viewport" data-carousel>
@@ -227,7 +313,7 @@ function openProductModal(product) {
       <div class="product-modal__content">
         <p class="eyebrow">${escapeHtml(collection)}</p>
         <h2>${escapeHtml(name)}</h2>
-        <strong>${formatPrice(product.price)}</strong>
+        <strong>${escapeHtml(productPrice(product))}</strong>
         <p>${escapeHtml(description)}</p>
         <div class="product-modal__actions">
           <a class="button button--primary button--nowrap" href="contact.html">${escapeHtml(t("product.contact"))}</a>

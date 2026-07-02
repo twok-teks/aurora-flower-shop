@@ -35,6 +35,11 @@ export function formatPrice(value) {
   }).format(value);
 }
 
+export function productPrice(product) {
+  if (product.priceLabel) return t(product.priceLabel);
+  return formatPrice(product.price);
+}
+
 export function escapeHtml(value = "") {
   const element = document.createElement("div");
   element.textContent = value;
@@ -63,7 +68,7 @@ export function productCard(product) {
         <div class="product-card__body">
           <div class="product-card__meta">
             <span>${escapeHtml(collection)}</span>
-            <strong>${formatPrice(product.price)}</strong>
+            <strong>${escapeHtml(productPrice(product))}</strong>
           </div>
           <h3>${escapeHtml(name)}</h3>
           <p>${escapeHtml(description)}</p>

@@ -73,6 +73,7 @@ const translations = {
     "product.sold": "Tạm hết",
     "product.available": "Còn hàng",
     "product.unavailable": "Tạm hết hàng",
+    "product.contactPrice": "Liên hệ báo giá",
     "product.fallback": "Một thiết kế theo mùa được Aurora chăm chút riêng cho bạn.",
     "product.viewImage": "Xem ảnh lớn",
     "product.closeImage": "Đóng ảnh lớn",
@@ -87,7 +88,9 @@ const translations = {
     "category.Plants": "Cây xanh",
     "subcategory.Bo Hong Do": "Bó hồng đỏ",
     "subcategory.Bo Hong Phan": "Bó hồng phấn",
-    "subcategory.Bo Hoa Mix": "Bó hoa mix"
+    "subcategory.Bo Hoa Mix": "Bó hoa mix",
+    "subcategory.Lan Ho Diep": "Lan hồ điệp",
+    "subcategory.Gio Hoa": "Giỏ hoa"
   },
   en: {
     "nav.home": "Home",
@@ -163,6 +166,7 @@ const translations = {
     "product.sold": "Out of stock",
     "product.available": "Available",
     "product.unavailable": "Currently unavailable",
+    "product.contactPrice": "Contact for price",
     "product.fallback": "A thoughtfully arranged seasonal selection.",
     "product.viewImage": "View full image",
     "product.closeImage": "Close full image",
@@ -177,7 +181,9 @@ const translations = {
     "category.Plants": "Plants",
     "subcategory.Bo Hong Do": "Red Rose Bouquets",
     "subcategory.Bo Hong Phan": "Pink Rose Bouquets",
-    "subcategory.Bo Hoa Mix": "Mixed Bouquets"
+    "subcategory.Bo Hoa Mix": "Mixed Bouquets",
+    "subcategory.Lan Ho Diep": "Phalaenopsis Orchids",
+    "subcategory.Gio Hoa": "Flower Baskets"
   }
 };
 
