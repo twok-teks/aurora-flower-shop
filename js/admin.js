@@ -25,13 +25,13 @@ async function requireAdmin() {
   }
   const { data: sessionData } = await supabase.auth.getSession();
   if (!sessionData.session) {
-    window.location.replace("admin-login.html");
+    window.location.replace("/admin-login");
     return null;
   }
   const { data: allowed, error } = await supabase.rpc("is_admin");
   if (error || !allowed) {
     await supabase.auth.signOut();
-    window.location.replace("admin-login.html");
+    window.location.replace("/admin-login");
     return null;
   }
   return sessionData.session.user;
@@ -208,12 +208,12 @@ productsContainer.addEventListener("click", (event) => {
 });
 document.querySelectorAll("[data-cancel-edit]").forEach((button) => button.addEventListener("click", resetForm));
 document.querySelector("[data-new-product]").addEventListener("click", () => { resetForm(); document.querySelector("[data-form-panel]").scrollIntoView({ behavior: "smooth" }); });
-document.querySelector("[data-logout]").addEventListener("click", async () => { await supabase.auth.signOut(); window.location.replace("admin-login.html"); });
+document.querySelector("[data-logout]").addEventListener("click", async () => { await supabase.auth.signOut(); window.location.replace("/admin-login"); });
 form.elements.image.addEventListener("change", () => {
   const file = form.elements.image.files[0];
   if (!file) return;
   imagePreview.querySelector("img").src = URL.createObjectURL(file);
   imagePreview.hidden = false;
 });
-supabase?.auth.onAuthStateChange((event) => { if (event === "SIGNED_OUT") window.location.replace("admin-login.html"); });
+supabase?.auth.onAuthStateChange((event) => { if (event === "SIGNED_OUT") window.location.replace("/admin-login"); });
 init();

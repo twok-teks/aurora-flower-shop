@@ -3,12 +3,12 @@ import { escapeHtml, fallbackImage, initNavigation, initScrollAnimations, produc
 import { getLanguage, initLanguage, t, translateCategory, translateSubcategory } from "./i18n.js";
 
 const shopCategories = [
-  { category: "All", page: "shop.html" },
-  { category: "Regular Bouquets", page: "shop-regular-bouquets.html" },
-  { category: "Hoa Cam Binh", page: "shop-hoa-cam-binh.html" },
-  { category: "Seasonal Bouquets", page: "shop-seasonal-bouquets.html" },
-  { category: "Company Ceremonial Bouquets", page: "shop-company-ceremonial.html" },
-  { category: "Memorial Bouquets", page: "shop-memorial.html" },
+  { category: "All", page: "/shop" },
+  { category: "Regular Bouquets", page: "/shop-regular-bouquets" },
+  { category: "Hoa Cam Binh", page: "/shop-vase-arrangements" },
+  { category: "Seasonal Bouquets", page: "/shop-seasonal-bouquets" },
+  { category: "Company Ceremonial Bouquets", page: "/shop-company-ceremonial" },
+  { category: "Memorial Bouquets", page: "/shop-memorial" },
 ];
 
 const shopSubcategories = {
@@ -17,6 +17,7 @@ const shopSubcategories = {
 };
 
 const homeFeaturedOrder = [
+  "hoa-tulip-hong-phan",
   "bo-pastel-mix-size-lon-3",
   "chau-lan-ho-diep-size-lon-3",
   "ke-hoa-chuc-mung-5",
@@ -316,8 +317,8 @@ function openProductModal(product) {
         <strong>${escapeHtml(productPrice(product))}</strong>
         <p>${escapeHtml(description)}</p>
         <div class="product-modal__actions">
-          <a class="button button--primary button--nowrap" href="contact.html">${escapeHtml(t("product.contact"))}</a>
-          <a class="button button--outline button--nowrap" href="shop.html">${escapeHtml(t("product.more"))}</a>
+          <a class="button button--primary button--nowrap" href="/contact">${escapeHtml(t("product.contact"))}</a>
+          <a class="button button--outline button--nowrap" href="/shop">${escapeHtml(t("product.more"))}</a>
         </div>
       </div>
     </div>`;

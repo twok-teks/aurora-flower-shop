@@ -13,7 +13,7 @@ async function userIsAdmin() {
 async function redirectExistingAdmin() {
   if (!isConfigured) return;
   const { data } = await supabase.auth.getSession();
-  if (data.session && await userIsAdmin()) window.location.replace("admin.html");
+  if (data.session && await userIsAdmin()) window.location.replace("/admin");
 }
 
 form.addEventListener("submit", async (event) => {
@@ -38,7 +38,7 @@ form.addEventListener("submit", async (event) => {
     showMessage(message, "This account does not have studio access.", "error");
   } else {
     showMessage(message, "Welcome back. Opening the studio...", "success");
-    window.location.replace("admin.html");
+    window.location.replace("/admin");
     return;
   }
   submit.disabled = false;
