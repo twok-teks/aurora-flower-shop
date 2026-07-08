@@ -26,6 +26,9 @@ const revealSelector = [
 ].join(", ");
 
 let scrollAnimationObserver;
+const themeStorageKey = "aurora-theme";
+const darkTheme = "dark";
+const lightTheme = "light";
 
 export function formatPrice(value) {
   return new Intl.NumberFormat(getLanguage() === "vi" ? "vi-VN" : "en-US", {
@@ -91,6 +94,39 @@ export function hideMessage(element) {
   if (element) element.hidden = true;
 }
 
+function storedTheme() {
+  return localStorage.getItem(themeStorageKey) === darkTheme ? darkTheme : lightTheme;
+}
+
+function updateThemeControls(theme) {
+  const isDark = theme === darkTheme;
+  document.querySelectorAll("[data-theme-toggle]").forEach((button) => {
+    const label = isDark ? t("theme.light") : t("theme.dark");
+    button.setAttribute("aria-label", label);
+    button.setAttribute("title", label);
+    button.setAttribute("aria-pressed", String(isDark));
+  });
+}
+
+function applyTheme(theme) {
+  document.documentElement.dataset.theme = theme;
+  updateThemeControls(theme);
+}
+
+export function initTheme() {
+  applyTheme(storedTheme());
+  document.querySelectorAll("[data-theme-toggle]").forEach((button) => {
+    button.addEventListener("click", () => {
+      const theme = document.documentElement.dataset.theme === darkTheme ? lightTheme : darkTheme;
+      localStorage.setItem(themeStorageKey, theme);
+      applyTheme(theme);
+    });
+  });
+  document.addEventListener("aurora:languagechange", () => {
+    updateThemeControls(document.documentElement.dataset.theme || lightTheme);
+  });
+}
+
 export function initScrollAnimations(root = document) {
   const reducedMotion = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
   if (reducedMotion || !("IntersectionObserver" in window)) return;
@@ -117,6 +153,7 @@ export function initNavigation() {
   const button = document.querySelector("[data-menu-button]");
   const nav = document.querySelector("[data-nav]");
   const header = document.querySelector(".site-header");
+  const themeToggles = [...document.querySelectorAll("[data-theme-toggle]")];
   const dropdowns = [...document.querySelectorAll("[data-nav-dropdown]")];
 
   const closeDropdowns = (except) => {
@@ -139,10 +176,13 @@ export function initNavigation() {
 
       if (currentScrollY <= 80 || menuOpen) {
         header.classList.remove("is-hidden");
+        themeToggles.forEach((toggle) => toggle.classList.remove("is-hidden"));
       } else if (currentScrollY > lastScrollY + 6) {
         header.classList.add("is-hidden");
+        themeToggles.forEach((toggle) => toggle.classList.add("is-hidden"));
       } else if (currentScrollY < lastScrollY - 6) {
         header.classList.remove("is-hidden");
+        themeToggles.forEach((toggle) => toggle.classList.remove("is-hidden"));
       }
 
       lastScrollY = currentScrollY;
@@ -168,6 +208,7 @@ export function initNavigation() {
       dropdown.classList.toggle("is-open", !open);
       dropdownButton.setAttribute("aria-expanded", String(!open));
       header?.classList.remove("is-hidden");
+      themeToggles.forEach((toggle) => toggle.classList.remove("is-hidden"));
     });
   });
 
@@ -177,6 +218,7 @@ export function initNavigation() {
     nav.classList.toggle("is-open", !open);
     if (open) closeDropdowns();
     header?.classList.remove("is-hidden");
+    themeToggles.forEach((toggle) => toggle.classList.remove("is-hidden"));
   });
   nav.addEventListener("click", (event) => {
     if (!event.target.closest("a")) return;
