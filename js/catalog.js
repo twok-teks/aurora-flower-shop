@@ -1,5 +1,5 @@
 import { demoProducts } from "./demo-products.js";
-import { escapeHtml, fallbackImage, initNavigation, initScrollAnimations, productCard, productPrice } from "./ui.js";
+import { escapeHtml, fallbackImage, initNavigation, initScrollAnimations, initTheme, productCard, productPrice } from "./ui.js";
 import { getLanguage, initLanguage, t, translateCategory, translateSubcategory } from "./i18n.js";
 
 const shopCategories = [
@@ -386,6 +386,7 @@ function openProductById(id) {
 }
 
 initLanguage();
+initTheme();
 initNavigation();
 initScrollAnimations();
 render();
