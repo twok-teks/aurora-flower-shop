@@ -1,9 +1,11 @@
 import { isConfigured, supabase } from "./supabase-client.js";
-import { showMessage } from "./ui.js";
+import { initTheme, showMessage } from "./ui.js";
 
 const form = document.querySelector("[data-login-form]");
 const message = document.querySelector("[data-auth-message]");
 const submit = document.querySelector("[data-submit]");
+
+initTheme();
 
 async function userIsAdmin() {
   const { data, error } = await supabase.rpc("is_admin");
@@ -46,4 +48,3 @@ form.addEventListener("submit", async (event) => {
 });
 
 redirectExistingAdmin();
-

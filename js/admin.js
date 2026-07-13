@@ -1,5 +1,5 @@
 import { isConfigured, supabase } from "./supabase-client.js";
-import { escapeHtml, formatPrice, hideMessage, showMessage } from "./ui.js";
+import { escapeHtml, formatPrice, hideMessage, initTheme, showMessage } from "./ui.js";
 
 const bucket = "product-images";
 const loading = document.querySelector("[data-page-loading]");
@@ -13,6 +13,8 @@ const formEyebrow = document.querySelector("[data-form-eyebrow]");
 const imagePreview = document.querySelector("[data-image-preview]");
 const saveButton = document.querySelector("[data-save-product]");
 let products = [];
+
+initTheme();
 
 function placeholder() {
   return "data:image/svg+xml," + encodeURIComponent('<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 120 90"><rect width="120" height="90" fill="#f3e9dc"/><circle cx="60" cy="38" r="20" fill="#f7d6e0"/><path d="M60 53v25" stroke="#829b82" stroke-width="5"/></svg>');
