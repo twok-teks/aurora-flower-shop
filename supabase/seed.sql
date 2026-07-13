@@ -5,7 +5,7 @@ values
   (
     'Bó Hồng Đỏ Size Nhỏ 1',
     'Small Red Rose Bouquet 1',
-    500000,
+    300000,
     'Bó hồng đỏ size nhỏ với giấy gói đen và nơ đỏ, gọn gàng nhưng vẫn nổi bật cho lời nhắn yêu thương.',
     'A small red rose bouquet wrapped in black paper with a red ribbon, simple, bold, and romantic.',
     'Regular Bouquets',
@@ -17,7 +17,7 @@ values
   (
     'Bó Hồng Đỏ Size Vừa 1',
     'Medium Red Rose Bouquet 1',
-    850000,
+    400000,
     'Bó hồng đỏ size vừa trong giấy gói trắng, điểm hoa xanh nhỏ và thiệp nhắn tinh tế.',
     'A medium red rose bouquet in crisp white wrap, finished with a small blue accent and message card.',
     'Regular Bouquets',
@@ -29,7 +29,7 @@ values
   (
     'Bó Hồng Đỏ Size Vừa 2',
     'Medium Red Rose Bouquet 2',
-    850000,
+    500000,
     'Bó hồng đỏ tròn đầy trong giấy gói trắng, tối giản và hiện đại cho dịp yêu thương.',
     'A full red rose bouquet in clean white wrap, minimal and modern for a romantic moment.',
     'Regular Bouquets',
@@ -41,7 +41,7 @@ values
   (
     'Bó Hồng Đỏ Size Vừa 3',
     'Medium Red Rose Bouquet 3',
-    850000,
+    600000,
     'Bó hồng đỏ giấy đen với điểm lan trắng, sang trọng và nổi bật nhưng vẫn rất gọn.',
     'Red roses in black wrap with a white orchid accent, elegant, bold, and neatly styled.',
     'Regular Bouquets',
@@ -53,7 +53,7 @@ values
   (
     'Bó Hồng Đỏ Size Vừa 4',
     'Medium Red Rose Bouquet 4',
-    850000,
+    600000,
     'Bó hồng đỏ phối lá xanh trong giấy gói nâu be, ấm áp và tự nhiên.',
     'Red roses with soft greenery in warm beige wrap, natural, modern, and heartfelt.',
     'Regular Bouquets',
@@ -77,7 +77,7 @@ values
   (
     'Bó Hồng Đỏ Size Lớn 2',
     'Large Red Rose Bouquet 2',
-    1000000,
+    600000,
     'Bó hồng đỏ size lớn trong giấy gói đen, dáng cao hiện đại với nơ đỏ nổi bật.',
     'A large red rose bouquet in black wrap, styled tall and modern with a striking red ribbon.',
     'Regular Bouquets',
@@ -137,7 +137,7 @@ values
   (
     'Bó Hồng Phấn Size Nhỏ 1',
     'Small Pink Rose Bouquet 1',
-    300000,
+    250000,
     'Bó hồng phấn size nhỏ phối hoa trắng và lá xanh, tươi sáng trong giấy gói trắng.',
     'A small pink rose bouquet with white blooms and fresh greenery, bright in clean white wrap.',
     'Regular Bouquets',
@@ -149,7 +149,7 @@ values
   (
     'Bó Hồng Phấn Size Nhỏ 2',
     'Small Pink Rose Bouquet 2',
-    500000,
+    250000,
     'Bó hồng phấn size nhỏ đầy đặn với hoa trắng xanh, mềm mại trong lớp gói trong hiện đại.',
     'A fuller small pink rose bouquet with white-green accents, softly wrapped in modern clear paper.',
     'Regular Bouquets',
@@ -185,7 +185,7 @@ values
   (
     'Bó Hồng Phấn Size Lớn 3',
     'Large Pink Rose Bouquet 3',
-    1000000,
+    1500000,
     'Bó hồng phấn size lớn dáng tròn, phủ sắc hồng dịu trong lớp gói trắng hiện đại.',
     'A large round pink rose bouquet, softly toned and framed in modern white wrap.',
     'Regular Bouquets',
@@ -233,7 +233,7 @@ values
   (
     'Bó Cẩm Tú Nhỏ 1',
     'Small Hydrangea Bouquet 1',
-    500000,
+    150000,
     'Bó cẩm tú nhỏ tông xanh lam và xanh non, mát mắt trong lớp gói trong nhẹ.',
     'A small hydrangea bouquet in soft blue and fresh green tones, airy in clear wrap.',
     'Regular Bouquets',
@@ -245,7 +245,7 @@ values
   (
     'Bó Cẩm Tú Nhỏ 2',
     'Small Hydrangea Bouquet 2',
-    500000,
+    200000,
     'Bó cẩm tú nhỏ tông xanh trắng, gọn nhẹ với giấy gói trong và nơ xanh nhạt.',
     'A small green-white hydrangea bouquet with clear wrap and a pale blue ribbon.',
     'Regular Bouquets',
@@ -257,7 +257,7 @@ values
   (
     'Bó Hoa Mix Size Vừa 1',
     'Medium Mixed Bouquet 1',
-    850000,
+    500000,
     'Bó hoa mix size vừa rực rỡ với hồng vàng, hoa hồng phấn và điểm xanh tươi.',
     'A medium mixed bouquet with yellow roses, blush blooms, and fresh green accents.',
     'Regular Bouquets',
@@ -269,7 +269,7 @@ values
   (
     'Bó Hoa Mix Size Vừa 2',
     'Medium Mixed Bouquet 2',
-    850000,
+    500000,
     'Bó hoa mix size vừa nhiều sắc màu, tươi vui với hồng, gerbera và hoa nhí trắng.',
     'A medium mixed bouquet full of color, with roses, gerberas, and tiny white daisies.',
     'Regular Bouquets',
@@ -293,7 +293,7 @@ values
   (
     'Bó Pastel Mix Size Vừa 1',
     'Medium Pastel Mix Bouquet 1',
-    850000,
+    600000,
     'Bó pastel mix size vừa với hồng, gerbera và hoa nhỏ xanh vàng, mềm mại như một khu vườn nhỏ.',
     'A medium pastel mix with roses, gerberas, and tiny blue-yellow accents, soft like a small garden.',
     'Regular Bouquets',
@@ -329,7 +329,7 @@ values
   (
     'Bó Pastel Mix Size Vừa 4',
     'Medium Pastel Mix Bouquet 4',
-    850000,
+    600000,
     'Bó pastel mix size vừa tông đào kem, phối hoa trắng nhẹ và giấy gói hồng nhạt.',
     'A medium pastel mix in peach and cream, finished with soft white accents and pale pink wrap.',
     'Regular Bouquets',
@@ -353,7 +353,7 @@ values
   (
     'Bó Pastel Mix Size Lớn 2',
     'Large Pastel Mix Bouquet 2',
-    1000000,
+    700000,
     'Bó pastel mix size lớn tông hồng rực, phối hồng kem, hoa trắng và nơ trắng xinh.',
     'A large pastel mix with bright pink blooms, cream roses, white flowers, and a sweet white ribbon.',
     'Regular Bouquets',
@@ -401,7 +401,7 @@ values
   (
     'Giỏ Hoa 2',
     'Flower Basket 2',
-    750000,
+    500000,
     'Giỏ hoa hồng vàng rực rỡ phối cúc trắng nhỏ, vui tươi và nổi bật.',
     'A bright yellow rose basket with tiny white daisies, cheerful and eye-catching.',
     'Hoa Cam Binh',
@@ -425,7 +425,7 @@ values
   (
     'Giỏ Hoa 4',
     'Flower Basket 4',
-    750000,
+    500000,
     'Giỏ hoa cam kem với hồng đào, hồng vàng nhạt và điểm lá bạc, ấm áp và tinh tế.',
     'A peach-cream flower basket with soft yellow roses and silver-green leaves, warm and refined.',
     'Hoa Cam Binh',
@@ -437,7 +437,7 @@ values
   (
     'Giỏ Hoa 5',
     'Flower Basket 5',
-    750000,
+    500000,
     'Giỏ hoa đỏ kem phối hồng đỏ, hồng kem và hoa nhỏ hồng, nổi bật nhưng vẫn thanh lịch.',
     'A red-cream flower basket with red roses, cream roses, and small pink blooms, bold yet elegant.',
     'Hoa Cam Binh',
@@ -545,7 +545,7 @@ values
   (
     'Kệ Chia Buồn 1',
     'Memorial Flower Stand 1',
-    1500000,
+    1000000,
     'Kệ chia buồn tông trắng với hồng trắng, cúc trắng và nơ đen, trang nhã và kính cẩn.',
     'A white memorial flower stand with white roses, mums, and a black ribbon, graceful and respectful.',
     'Memorial Bouquets',
@@ -605,7 +605,7 @@ values
   (
     'Kệ Hoa Chúc Mừng 1',
     'Congratulatory Flower Stand 1',
-    2000000,
+    1000000,
     'Kệ hoa chúc mừng tông hồng pastel với hồng phấn và baby trắng, ngọt ngào và sang trọng.',
     'A pastel pink congratulatory stand with blush roses and white baby''s breath, sweet and elegant.',
     'Company Ceremonial Bouquets',
@@ -665,7 +665,7 @@ values
   (
     'Kệ Hoa Chúc Mừng 6',
     'Congratulatory Flower Stand 6',
-    2000000,
+    1000000,
     'Kệ hoa chúc mừng tông hồng xanh với hồng viền hồng, cẩm chướng và giấy gói xanh non.',
     'A pink-green congratulatory stand with pink-edged roses, carnations, and fresh green wrap.',
     'Company Ceremonial Bouquets',

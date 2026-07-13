@@ -1,4 +1,4 @@
-import { demoProducts } from "./demo-products.js";
+import { demoProducts } from "./demo-products.js?v=20260713-prices";
 import { escapeHtml, fallbackImage, initNavigation, initScrollAnimations, initTheme, productCard, productPrice } from "./ui.js";
 import { getLanguage, initLanguage, t, translateCategory, translateSubcategory } from "./i18n.js";
 
