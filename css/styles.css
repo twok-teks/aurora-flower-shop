@@ -285,7 +285,7 @@ body[data-page="shop"]:not([data-shop-category="All"]) .page-hero .eyebrow { mar
 .contact-directory__heading h2 { font-size: clamp(2.3rem, 4vw, 3.6rem); }
 .contact-directory__heading > p:last-child { max-width: 600px; margin-inline: auto; color: var(--muted); }
 .contact-links { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 14px; }
-.contact-directory .contact-links { grid-template-columns: repeat(4, minmax(0, 1fr)); }
+.contact-directory .contact-links { max-width: 800px; margin-inline: auto; grid-template-columns: repeat(2, minmax(0, 1fr)); }
 .contact-link { position: relative; display: flex; min-width: 0; min-height: 190px; padding: 28px 24px; flex-direction: column; align-items: flex-start; justify-content: space-between; gap: 24px; background: var(--cream); border: 1px solid var(--line); border-radius: 20px; text-decoration: none; transition: border-color .2s ease, box-shadow .2s ease, transform .2s ease; }
 .contact-link:hover { border-color: #c7d9c5; box-shadow: 0 15px 35px rgba(70, 60, 52, .08); transform: translateY(-3px); }
 .contact-link__icon { display: grid; width: 44px; height: 44px; place-items: center; background: var(--sage); border-radius: 50%; color: var(--sage-deep); }
@@ -359,7 +359,7 @@ textarea { resize: vertical; }.login-card form .button { margin-top: 26px; }
   .product-modal__card { grid-template-columns: 1fr; overflow-y: auto; }
   .product-modal__media { height: min(58vh, 380px); min-height: 320px; max-height: 380px; }
   .story__inner { grid-template-columns: 1fr; gap: 36px; }
-  .contact-links { grid-template-columns: 1fr; }.contact-link { min-height: 150px; }
+  .contact-links, .contact-directory .contact-links { max-width: 540px; grid-template-columns: 1fr; }.contact-link { min-height: 150px; }
   .admin-grid { grid-template-columns: 1fr; }.admin-panel--form { position: static; }.login-layout { grid-template-columns: 1fr; }.login-art { display: none; }
 }
 
